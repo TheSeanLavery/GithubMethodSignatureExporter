@@ -19,9 +19,6 @@ def get_repo_files(github: Github, repo_full_name: str) -> List[str]:
     repo = github.get_repo(repo_full_name)
     return get_all_files(repo)
 
-import ast
-
-
 def get_method_signatures(file_content: str) -> List[str]:
     signatures = []
     method_pattern = re.compile(r"def\s+(\w+)\s*\((.*?)\):")
@@ -42,8 +39,6 @@ def get_method_signatures(file_content: str) -> List[str]:
         signature = f"{method_name}({args}) -> {return_type}"
         signatures.append(signature)
     return signatures
-
-
 
 def main():
     repo_url = input("Enter the public GitHub URL of the repository: ")
