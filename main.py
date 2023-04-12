@@ -1,4 +1,5 @@
 import base64
+import os
 import requests
 import re
 from github import Github   
@@ -52,7 +53,10 @@ def main():
     github = Github(pat)
     file_paths = get_repo_files(github, repo_full_name)
 
-    with open(output_file, "w") as outfile:
+    if not os.path.exists("output"):
+        os.makedirs("output")
+
+    with open(f"output/{output_file}", "w") as outfile:
         for file_path in file_paths:
             repo = github.get_repo(repo_full_name)
             content = repo.get_contents(file_path)
@@ -63,7 +67,7 @@ def main():
                 outfile.write("\n".join(signatures))
                 outfile.write("\n\n")
 
-    print(f"Method signatures saved to: {output_file}")
+    print(f"Method signatures saved to: output/{output_file}")
 
 if __name__ == "__main__":
     main()
